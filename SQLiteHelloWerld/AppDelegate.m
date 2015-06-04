@@ -15,8 +15,24 @@
 @implementation AppDelegate
 
 
+//added by max
+- (DBAccessSettings*)getCustomSettings {
+        DBAccessSettings *settings = [[DBAccessSettings alloc] init];
+        NSURL *applicationCachesDirectory = [[[NSFileManager defaultManager] URLsForDirectory:NSCachesDirectory inDomains:NSUserDomainMask] lastObject];
+        //settings.databaseLocation = [applicationCachesDirectory path];
+        NSLog(settings.databaseLocation);
+        //settings.defaultDatabaseName = @"myDefaultDB";
+        NSLog(@"DOES THIS PRINT");
+        return settings;
+}
+//
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+        //added by max
+        [self getCustomSettings];
+      
+        //
     return YES;
 }
 

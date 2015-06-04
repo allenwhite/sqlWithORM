@@ -24,14 +24,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-	self.dbManager = [[DataBaseAccess alloc] initWithDatabaseFilename:@"sampledb.sql"];
-
-    // Make self the delegate and datasource of the table view.
-    self.tblPeople.delegate = self;
-    self.tblPeople.dataSource = self;
+	self.dbManager = [[DataBaseAccess alloc] initWithDatabaseFilename:@"application_database"];
     
-    // Load the data.
-    [self loadData];
+        // Make self the delegate and datasource of the table view.
+        self.tblPeople.delegate = self;
+        self.tblPeople.dataSource = self;
+    
+        // Load the data.
+        [self loadData];
 }
 
 

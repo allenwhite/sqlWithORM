@@ -11,6 +11,9 @@
 
 @interface DataBaseAccess : NSObject
 
+@property (nonatomic, strong) NSString *documentsDirectory;
+@property (nonatomic, strong) NSString *databaseFilename;
+
 -(instancetype)initWithDatabaseFilename:(NSString *)dbFilename;
 -(DBResultSet *)shelectAll;
 -(void)updateWithID: (int)idNum withAge:(int)age withFN:(NSString*)fn withLN:(NSString*)ln;

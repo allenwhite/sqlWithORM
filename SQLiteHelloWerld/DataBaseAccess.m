@@ -9,16 +9,43 @@
 #import "DataBaseAccess.h"
 #import "PeopleInfo.h"
 
+
 @implementation DataBaseAccess
 
 -(instancetype)initWithDatabaseFilename:(NSString *)dbFilename{
 	self = [super init];
-	[DBAccess setDelegate:self];
+        //added by max //if (self)?
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(
+                                                             NSDocumentDirectory,
+                                                             NSUserDomainMask,
+                                                             YES);
+        self.documentsDirectory = [paths objectAtIndex:0];
+        NSLog(self.documentsDirectory);
+        self.databaseFilename = dbFilename;
+        [self copyDatabaseIntoDocumentsDirectory];
+        //
+        [DBAccess setDelegate:self];
 	[DBAccess openDatabaseNamed:dbFilename];
+        
 	return self;
 }
 
-
+-(void)copyDatabaseIntoDocumentsDirectory{
+        NSFileManager *file_manager = [NSFileManager defaultManager];
+        NSString *destinationPath = [[self.documentsDirectory stringByAppendingPathComponent:self.databaseFilename]stringByAppendingString:@".db"];
+        /*
+         check if the db is in the documents directory and if not put it there
+         */
+        if  (! [ file_manager  fileExistsAtPath:destinationPath] ) {
+                NSString *sourcePath = [[   [ [NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:self.databaseFilename] stringByAppendingString:@".db"];
+                NSLog(sourcePath);
+                NSError *error;
+                [file_manager copyItemAtPath:sourcePath toPath:destinationPath error:&error];
+                if (error != nil) {
+                        NSLog(@"%@", [error localizedDescription]);
+                }
+        }
+}
 
 -(DBResultSet *)shelectAll{
 	// Form the query.
